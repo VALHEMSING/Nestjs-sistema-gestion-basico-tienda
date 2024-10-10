@@ -17,6 +17,9 @@ export class Clientes extends Document implements IClientes{
     @Prop ({required: true})
     celular_cliente: string;
 
+    @Prop({required: true})
+    activo_cliente?: boolean;
+
 }
 
 export const ClientesSchema = SchemaFactory.createForClass(Clientes);
