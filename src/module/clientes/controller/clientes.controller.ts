@@ -33,6 +33,12 @@ export class ClientesController {
         return await this.clientesService.findAll();
     }
 
+
+    @Put ('active/: id')
+    async active (@Param('id')id: string): Promise<void>{
+        await this.clientesService.active(id);
+    }
+    
     @Put(':id')
     async update(@Param('id') id: string, @Body() updateClientesDto: UpdateClientesDto): Promise<Clientes> {
         const updatedCliente = await this.clientesService.update(id, updateClientesDto);

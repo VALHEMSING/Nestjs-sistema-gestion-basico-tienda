@@ -49,6 +49,17 @@ export class ClientesService {
         return updatePartialCliente;
     }
 
+    async active (id:string): Promise<void>{
+        const result = await this.clientesModel.findByIdAndUpdate(
+            id, 
+            {activo_cliente: true},
+            {new : true})
+            .exec();
+            if(!result){
+                throw new NotFoundException(`Cliente con ID ${id} no encontrado`);
+            }
+    }
+
     // Método para desactivar un cliente
     async deactivate(id: string): Promise<void> {
         const result = await this.clientesModel.findByIdAndUpdate(
