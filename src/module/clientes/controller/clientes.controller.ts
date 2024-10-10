@@ -34,12 +34,12 @@ export class ClientesController {
     }
 
 
-    @Put ('active/: id')
+    @Put ('active/:id')
     async active (@Param('id')id: string): Promise<void>{
         await this.clientesService.active(id);
     }
     
-    @Put(':id')
+    @Put('update/:id')
     async update(@Param('id') id: string, @Body() updateClientesDto: UpdateClientesDto): Promise<Clientes> {
         const updatedCliente = await this.clientesService.update(id, updateClientesDto);
         if (!updatedCliente) {
@@ -48,7 +48,7 @@ export class ClientesController {
         return updatedCliente;
     }
 
-    @Patch(':id')
+    @Patch('updatePartial/:id')
     async updatePartial(@Param('id') id: string, @Body() updateClientesDto: Partial<UpdateClientesDto>): Promise<Clientes> {
         const updatedPartialCliente = await this.clientesService.updatePartial(id, updateClientesDto);
         if (!updatedPartialCliente) {
@@ -57,12 +57,12 @@ export class ClientesController {
         return updatedPartialCliente;
     }
 
-    @Delete(':id')
+    @Delete('delete/:id')
     async remove(@Param('id') id: string): Promise<void> {
         await this.clientesService.delete(id);
     }
 
-    @Put('/:id')
+    @Put('deactivate/:id')
     async deactivate(@Param('id') id: string): Promise<void> {
         await this.clientesService.deactivate(id);
     }
