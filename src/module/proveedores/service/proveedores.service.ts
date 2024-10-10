@@ -11,6 +11,7 @@ import { UpdateProveedoresDto } from '../dto/update-proveedores.dto';
 @Injectable()
 export class ProveedoresServices{
 
+    //Inyeccion de dependencias
     constructor(@InjectModel(Proveedores.name) private proveedorModel: Model<Proveedores>)
     {
 
