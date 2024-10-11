@@ -1,5 +1,4 @@
-
-
+import { Proveedores } from "src/module/proveedores/schema/proveedores.schema";
 
 
 export interface IProductos{
@@ -7,5 +6,6 @@ export interface IProductos{
     nombre_producto: string;
     cantidad: number;
     precio: number;
+    proveedor: Proveedores;
     activo?: boolean;
 }
