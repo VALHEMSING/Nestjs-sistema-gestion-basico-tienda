@@ -78,6 +78,18 @@ export class ProveedoresController{
 
      //Controlador para Activar
     @Put('active/:id')
+    //Descripcion del endpoint
+    @ApiOperation({summary:'Activar un proveedor'})
+    //Respuesta exitosa
+    @ApiResponse({status: 204, description: 'Proveedor activado'})
+    //Resíesta de error
+    @ApiResponse({status:400, description:'No se encuentra el proveedor'})
+    @ApiParam({
+        name: 'id',
+        required: true,
+        description: 'Id del proveedor que desea activar',
+        type: String,
+    })
     async active(@Param('id') id: string): Promise<void>{
         await this.proveedoresServies.active(id);
     }
