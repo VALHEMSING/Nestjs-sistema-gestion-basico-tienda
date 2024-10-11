@@ -157,6 +157,30 @@ export class ProveedoresController{
 
     //Controlador para actualizar todo el proveedor
     @Put('update/:id')
+
+    // Descripción del endpoint
+    @ApiOperation({summary: 'Actualizar de un proveedor'}) 
+    // Respuesta exitosa
+    @ApiResponse({status: 201, description: 'El proveedor ha sido actualizado'}) 
+    // Respueta de error
+    @ApiResponse({status: 400, description: 'No se encuentra el proveedor'})
+    // Respuesta de error
+    @ApiResponse({status:404, description:'Solicitud incorrecta'})
+    // Cuerpo del endpoint
+    @ApiBody({
+        description: 'Cuerpo de solicitud para actualizar un nuevo proveedor',
+        examples:{
+            example:{
+                summary: 'Ejemplo de actualización',
+                value:{
+                    nombre_proveedor: 'Proveedor_actualizado',
+                    email_proveedor: 'proveedorudpate@gmail.com',
+                    celular_proveedor: '1234567'
+                }
+            }
+        }
+    })
+    
     async update(@Param('id') id: string, @Body() updateProveedoresDto: UpdateProveedoresDto): Promise<Proveedores>{
         const updateProveedor = await this.proveedoresServies.update(id, updateProveedoresDto);
         if(!updateProveedor){
@@ -166,6 +190,28 @@ export class ProveedoresController{
     }
 
     @Patch('updatePartial/:id')
+    // Descripción del endpoint
+    @ApiOperation({summary: 'Actualizar de un proveedor parcialmente'}) 
+    // Respuesta exitosa
+    @ApiResponse({status: 201, description: 'El proveedor ha sido actualizado'}) 
+    // Respueta de error
+    @ApiResponse({status: 400, description: 'No se encuentra el proveedor'})
+    // Respuesta de error
+    @ApiResponse({status:404, description:'Solicitud incorrecta'})
+    // Cuerpo del endpoint
+    @ApiBody({
+        description: 'Cuerpo de solicitud para actualizar un nuevo proveedor',
+        examples:{
+            example:{
+                summary: 'Ejemplo de actualización',
+                value:{
+                    nombre_proveedor: 'Proveedor_actualizacionParcial',
+                    email_proveedor: 'proveedorudpateparcial@gmail.com',
+                    celular_proveedor: '12345674354'
+                }
+            }
+        }
+    })
     async updatePartial(@Param('id') id: string, @Body() updateProveedoresDto: UpdateProveedoresDto): Promise<Proveedores>{
         const updatePartialProveedor = await this.proveedoresServies.updatePartial(id, updateProveedoresDto);
         if(!updatePartialProveedor){
