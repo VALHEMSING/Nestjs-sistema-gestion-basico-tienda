@@ -65,6 +65,8 @@ export class ProveedoresController{
     @ApiResponse({status: 204, description: 'Proveedor desactivado'})
     //Resíesta de error
     @ApiResponse({status:400, description:'No se encuentra el proveedor'})
+    // Respuesta de error
+    @ApiResponse({status:404, description:'Solicitud incorrecta'})
     @ApiParam({
         name: 'id',
         required: true,
@@ -84,6 +86,8 @@ export class ProveedoresController{
     @ApiResponse({status: 204, description: 'Proveedor activado'})
     //Resíesta de error
     @ApiResponse({status:400, description:'No se encuentra el proveedor'})
+    // Respuesta de error
+    @ApiResponse({status:404, description:'Solicitud incorrecta'})
     @ApiParam({
         name: 'id',
         required: true,
@@ -98,6 +102,20 @@ export class ProveedoresController{
 
     //Controlador para eliminar
     @Delete('delete/:id')
+        //Descripcion del endpoint
+        @ApiOperation({summary:'Eliminar un proveedor'})
+        //Respuesta exitosa
+        @ApiResponse({status: 204, description: 'Proveedor eliminado'})
+        //Respuesta de error
+        @ApiResponse({status:400, description:'No se encuentra el proveedor'})
+        // Respuesta de error
+        @ApiResponse({status:404, description:'Solicitud incorrecta'})
+        @ApiParam({
+            name: 'id',
+            required: true,
+            description: 'Id del proveedor que desea eliminar',
+            type: String,
+        })
     async delete(@Param('id') id: string): Promise<void>{
         await this.proveedoresServies.delete(id);
     }
@@ -105,6 +123,12 @@ export class ProveedoresController{
 
     //Controlador para obtener todos los proveedores
     @Get()
+    //Descripcion endpoint
+    @ApiOperation({summary: 'Obtener todos los proveedores'})
+    // Respuesta de exito
+    @ApiResponse({status:200, description: 'Lista de proveedores ', type:[Proveedores] })
+    // Respuesta de error
+    @ApiResponse({status: 404, description: 'Paises no encontrados'})
     async findAll(): Promise<Proveedores[]>{
         return await this.proveedoresServies.findAll();
     }
@@ -112,6 +136,20 @@ export class ProveedoresController{
 
     //Controlador para obtener por id
     @Get(':id')
+    //Descripcion del endpoint
+    @ApiOperation({summary:'Obtener un proveedor por su Id'})
+    //Respuesta exitosa
+    @ApiResponse({status: 204, description: 'Proveedor encontrado'})
+    //Respuesta de error
+    @ApiResponse({status:400, description:'No se encuentra el proveedor'})
+    // Respuesta de error
+    @ApiResponse({status:404, description:'Solicitud incorrecta'})
+    @ApiParam({
+        name: 'id',
+        required: true,
+        description: 'Id del proveedor que desea obtener',
+        type: String,
+    })
     async findOne(@Param('id') id: string): Promise<Proveedores>{
         return await this.proveedoresServies.findOne(id)
     }
