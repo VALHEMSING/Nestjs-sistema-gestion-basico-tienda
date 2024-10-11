@@ -4,16 +4,20 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+   // Aquí estableces el prefijo global 'api'
+   app.setGlobalPrefix('api');
 
    // Configuración de Swagger
   const config = new DocumentBuilder()
   .setTitle('API Sistema de gestión ')
   .setDescription('Se vera las APIs de nuestro sistema')
   .setVersion('1.0.0')
-   .addTag('' )  // Etiqueta para agrupar los endpoints
-  .build();
+   .addTag('proveedores' ) 
+   .addTag('clientes') // Etiqueta para agrupar los endpoints
+   .addTag('productos')
+   .build();
   const document = SwaggerModule.createDocument(app, config);
-    SwaggerModule.setup('api', app, document);  // Configura Swagger en el endpoint '/api'
+    SwaggerModule.setup('api/', app, document);  // Configura Swagger en el endpoint '/api'
 
     console.log(`Documentación de Swagger está disponible en: http://localhost:3000/api`);
 
