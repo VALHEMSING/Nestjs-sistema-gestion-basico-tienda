@@ -15,7 +15,7 @@ export class Productos extends Document implements IProductos{
     @Prop({required: true})
     precio: number;
 
-    @Prop({ type: String,ref: 'Proveedores',required: true,})
+    @Prop({ type: String,ref: 'Proveedores',required: true})
     proveedor: Proveedores;
 
     @Prop({default: true})

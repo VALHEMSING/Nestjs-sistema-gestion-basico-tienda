@@ -9,7 +9,7 @@ import {
     Put,
     Patch
 } from '@nestjs/common';
-import { ProductosServices } from '../services/productos.sevices';
+import { ProductosServices } from '../services/productos.services';
 import { CreateProductosDto } from '../dto/create-productos.dto';
 import { UpdateProductosDto } from '../dto/udpate-productos.dto';
 import { Productos } from '../schema/productos.schema';
@@ -26,17 +26,17 @@ export class ProductosControllers{
     }
 
     @Put('deactive/:id')
-    async deactive(@Body('id') id: string): Promise<void>{
+    async deactive(@Param('id') id: string): Promise<void>{
         await this.productosServices.deactive(id);
     }
 
     @Put('active/:id')
-    async active(@Body('id') id: string): Promise<void>{
+    async active(@Param('id') id: string): Promise<void>{
         await this.productosServices.active(id);
     }
 
     @Delete('delete/:id')
-    async delete(@Body('id') id: string): Promise<void>{
+    async delete(@Param('id') id: string): Promise<void>{
         await this.productosServices.delete(id);
     }
 
@@ -61,7 +61,7 @@ export class ProductosControllers{
         return updateProducto
     }
 
-    @Put('updatePartial/:id')
+    @Patch('updatePartial/:id')
     async udpatePartial(@Param('id') id: string, @Body() updateProductosDto: UpdateProductosDto): Promise<Productos>{
         const updatePartialProducto = await this.productosServices.udpatePartial(id, updateProductosDto);
         if(!updatePartialProducto){

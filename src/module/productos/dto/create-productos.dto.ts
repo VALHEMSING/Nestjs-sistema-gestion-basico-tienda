@@ -15,6 +15,10 @@ export class CreateProductosDto {
     @IsNumber()
     precio: number;
 
+    @IsNotEmpty()
+    @IsString()
+    proveedor: string;
+
     @IsBoolean()
     activo?: boolean;
 

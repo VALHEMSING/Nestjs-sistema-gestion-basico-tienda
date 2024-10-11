@@ -15,6 +15,10 @@ export class UpdateProductosDto {
     @IsNumber()
     precio?: number;
 
+    @IsNotEmpty()
+    @IsString()
+    proveedor: string;
+
     @IsBoolean()
     activo?: boolean;
 
