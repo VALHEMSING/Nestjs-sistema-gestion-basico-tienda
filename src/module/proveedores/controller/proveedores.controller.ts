@@ -59,6 +59,18 @@ export class ProveedoresController{
 
     //Controlador para desactivar
     @Put('deactive/:id')
+    //Descripcion del endpoint
+    @ApiOperation({summary:'Desctivar un proveedor'})
+    //Respuesta exitosa
+    @ApiResponse({status: 204, description: 'Proveedor desactivado'})
+    //Resíesta de error
+    @ApiResponse({status:400, description:'No se encuentra el proveedor'})
+    @ApiParam({
+        name: 'id',
+        required: true,
+        description: 'Id del proveedor que desea desactivar',
+        type: String,
+    })
     async deactive(@Param('id') id: string): Promise<void>{
         await this.proveedoresServies.deactive(id);
     }
