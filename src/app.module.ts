@@ -10,7 +10,6 @@ import { ClientesModule } from './module/clientes/clientes.module';
     ProveedoresModule,
     ClientesModule,
     
-    
   ],
   
 })
