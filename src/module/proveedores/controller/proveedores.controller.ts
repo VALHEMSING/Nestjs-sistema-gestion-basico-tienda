@@ -15,7 +15,11 @@ import { CreateProveedoresDto } from '../dto/create-proveedores.dto';
 import { UpdateProveedoresDto } from '../dto/update-proveedores.dto';
 import { Proveedores } from '../schema/proveedores.schema';
 
-@Controller('proveedores')
+// Importacion necesaria para documentar en swagger para los endpoints
+import { ApiTags, ApiResponse, ApiOperation, ApiBody, ApiParam } from '@nestjs/swagger';
+
+@ApiTags('Proveedor') // Etiqueta para agrupar endpoints en la documentacion
+@Controller('proveedores') // Ruta base
 export class ProveedoresController{
 
 
@@ -28,6 +32,26 @@ export class ProveedoresController{
 
     //Controlador para crear el Proveedor
     @Post()
+    // Descripción del endpoint
+    @ApiOperation({summary: 'Crear un nuevo proveedor'}) 
+    // Respuesta exitosa
+    @ApiResponse({status: 201, description: 'El proveedor ha sido creado'}) 
+    // Respueta de error
+    @ApiResponse({status: 400, description: 'Solicitud incorrecta'})
+    // Cuerpo del endpoint
+    @ApiBody({
+        description: 'Cuerpo de solicitud para crear un nuevo proveedor',
+        examples:{
+            example:{
+                summary: 'Ejemplo de crearción',
+                value:{
+                    nombre_proveedor: 'Nombre__Proveedor',
+                    email_proveedor: 'proveedor@gmail.com',
+                    celular_proveedor: '1234567890'
+                }
+            }
+        }
+    })
     async craete(@Body() createProveedorDto: CreateProveedoresDto): Promise<Proveedores>{
         return  this.proveedoresServies.createProveedor(createProveedorDto);
     }
