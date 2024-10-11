@@ -12,12 +12,9 @@ async function bootstrap() {
   .setTitle('API Sistema de gestión ')
   .setDescription('Se vera las APIs de nuestro sistema')
   .setVersion('1.0.0')
-   .addTag('proveedores' ) 
-   .addTag('clientes') // Etiqueta para agrupar los endpoints
-   .addTag('productos')
-   .build();
+  .build();
   const document = SwaggerModule.createDocument(app, config);
-    SwaggerModule.setup('api/', app, document);  // Configura Swagger en el endpoint '/api'
+    SwaggerModule.setup('api', app, document);  // Configura Swagger en el endpoint '/api'
 
     console.log(`Documentación de Swagger está disponible en: http://localhost:3000/api`);
 
