@@ -1,25 +1,25 @@
-import { IsNotEmpty, IsString, IsBoolean, IsNumber} from "class-validator";
-
+import { IsOptional, IsString, IsBoolean, IsNumber, IsArray } from "class-validator";
+import { Types } from "mongoose";
 
 export class UpdateProductosDto {
 
-    @IsNotEmpty()
+    @IsOptional() 
     @IsString()
     nombre_producto?: string;
 
-    @IsNotEmpty()
+    @IsOptional() 
     @IsNumber()
     cantidad?: number;
 
-    @IsNotEmpty()
+    @IsOptional() 
     @IsNumber()
     precio?: number;
 
-    @IsNotEmpty()
-    @IsString()
-    proveedor: string;
+    @IsOptional() 
+    @IsArray() 
+    proveedor?: string[]; 
 
+    @IsOptional() 
     @IsBoolean()
     activo?: boolean;
-
 }

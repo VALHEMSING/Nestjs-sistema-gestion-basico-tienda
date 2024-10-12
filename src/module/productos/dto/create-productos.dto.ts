@@ -1,25 +1,22 @@
-import { IsNotEmpty, IsString, IsBoolean, IsNumber} from "class-validator";
+import { IsString, IsNumber, IsOptional, IsArray, ArrayNotEmpty } from 'class-validator';
 
 
-export class CreateProductosDto {
-
-    @IsNotEmpty()
+export class CreateProductoDto {
     @IsString()
     nombre_producto: string;
 
-    @IsNotEmpty()
     @IsNumber()
     cantidad: number;
 
-    @IsNotEmpty()
     @IsNumber()
     precio: number;
 
-    @IsNotEmpty()
-    @IsString()
-    proveedor: string;
+    // El campo de proveedores es opcional cuando creamos un producto
+    @IsOptional()
+    @IsArray()
+    @ArrayNotEmpty()
+    proveedor?: string[]; // Es un array de ObjectIds que hace referencia a los proveedores
 
-    @IsBoolean()
+    @IsOptional()
     activo?: boolean;
-
 }

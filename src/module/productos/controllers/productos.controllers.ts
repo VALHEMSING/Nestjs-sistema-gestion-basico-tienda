@@ -10,7 +10,7 @@ import {
     Patch
 } from '@nestjs/common';
 import { ProductosServices } from '../services/productos.services';
-import { CreateProductosDto } from '../dto/create-productos.dto';
+import { CreateProductoDto } from '../dto/create-productos.dto';
 import { UpdateProductosDto } from '../dto/udpate-productos.dto';
 import { Productos } from '../schema/productos.schema';
 
@@ -21,7 +21,7 @@ export class ProductosControllers{
     }
 
     @Post()
-    async create(@Body()createProductosDto: CreateProductosDto): Promise<Productos>{
+    async create(@Body()createProductosDto: CreateProductoDto): Promise<Productos>{
         return this.productosServices.createProducto(createProductosDto);
     }
 
@@ -48,7 +48,8 @@ export class ProductosControllers{
 
 
     @Get(':id')
-    async findOne(@Body('id') id: string): Promise<Productos>{
+    async findOne(@Param('id') id: string): Promise<Productos>{
+        console.log('ID recibido:', id); // Agrega esto para depurar
         return await this.productosServices.findOne(id);
     }
 
@@ -69,4 +70,19 @@ export class ProductosControllers{
         }
         return updatePartialProducto
     }
+
+    // Ruta para agregar un proveedor a un producto
+    @Patch(':productoId/proveedores/:proveedorId')
+    async agregarProveedorProducto(
+        @Param('productoId') productoId: string,
+        @Param('proveedorId') proveedorId: string,
+    ): Promise<Productos> {
+        return this.productosServices.agregarProveedorAProducto(productoId, proveedorId);
+    }
+
+    @Patch(':productoId/proveedores/:proveedorId/eliminar')
+    async eliminarProveedorProducto(@Param('productoId') productoId: string, @Param('proveedorId') proveedorId: string): Promise<Productos> {
+        return this.productosServices.eliminarProveedorDeProducto(productoId, proveedorId);
+    }
+
 }

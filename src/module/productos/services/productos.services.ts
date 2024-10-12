@@ -2,17 +2,21 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Productos } from '../schema/productos.schema';
-import { CreateProductosDto } from '../dto/create-productos.dto';
+import { CreateProductoDto } from '../dto/create-productos.dto';
 import { UpdateProductosDto } from '../dto/udpate-productos.dto';
+import { Proveedores } from 'src/module/proveedores/schema/proveedores.schema';
+import { ProveedoresServices } from 'src/module/proveedores/service/proveedores.service';
+
 
 @Injectable()
 export class ProductosServices{
-    constructor(@InjectModel(Productos.name) private productosModel: Model<Productos>)
+    constructor(@InjectModel(Productos.name) private productosModel: Model<Productos>,
+            private proveedoresServices: ProveedoresServices)
     {
 
     }
 
-    async createProducto(createProductosDto: CreateProductosDto): Promise<Productos>
+    async createProducto(createProductosDto: CreateProductoDto): Promise<Productos>
     {
         const createProducto = new this.productosModel(createProductosDto);
         return createProducto.save();
@@ -94,6 +98,56 @@ export class ProductosServices{
         }
     }
 
+     // Método para agregar un proveedor a un producto
+    async agregarProveedorAProducto(productoId: string, proveedorId: string): Promise<Productos> {
+        // Verificamos la existencia del producto
+        const producto = await this.productosModel.findById(productoId);
+        if (!producto) {
+            throw new NotFoundException(`Producto con id ${productoId} no encontrado`);
+        }
 
+        // Verificamos que el proveedor exista
+        const proveedor = await this.proveedoresServices.findOne(proveedorId);
+        if (!proveedor) {
+            throw new NotFoundException(`Proveedor con id ${proveedorId} no encontrado`);
+        }
+
+         // Agregamos el proveedor a la lista de proveedores si no está ya agregado
+        if (!producto.proveedor.includes(proveedorId)) {
+            producto.proveedor.push(proveedorId);
+        } else {
+            throw new Error(`El proveedor ya está asociado a este producto`);
+        }
+
+        // Guardamos los cambios en la base de datos
+        return await producto.save();
+    }
+
+
+    async eliminarProveedorDeProducto(productoId: string, proveedorId: string): Promise<Productos> {
+        // Verificamos la existencia del producto
+        const producto = await this.productosModel.findById(productoId);
+        if (!producto) {
+            throw new NotFoundException(`Producto con id ${productoId} no encontrado`);
+        }
+    
+        // Verificamos que el proveedor exista
+        const proveedor = await this.proveedoresServices.findOne(proveedorId);
+        if (!proveedor) {
+            throw new NotFoundException(`Proveedor con id ${proveedorId} no encontrado`);
+        }
+    
+        // Verificamos si el proveedor está asociado al producto
+        const proveedorIndex = producto.proveedor.indexOf(proveedorId);
+        if (proveedorIndex === -1) {
+            throw new Error(`El proveedor no está asociado a este producto`);
+        }
+    
+        // Eliminamos el proveedor de la lista
+        producto.proveedor.splice(proveedorIndex, 1);
+    
+        // Guardamos los cambios en la base de datos
+        return await producto.save();
+    }
 
 }
