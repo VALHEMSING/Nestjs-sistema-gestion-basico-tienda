@@ -13,6 +13,7 @@ import { Clientes, ClientesSchema } from './schema/clientes.schema';
 
     controllers: [ClientesController],
     providers: [ClientesService],
+    exports: [ClientesService]
 
 })
 

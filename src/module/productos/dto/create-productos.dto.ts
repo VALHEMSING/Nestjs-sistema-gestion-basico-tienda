@@ -1,4 +1,5 @@
 import { IsString, IsNumber, IsOptional, IsArray, ArrayNotEmpty } from 'class-validator';
+import { Clientes } from 'src/module/clientes/schema/clientes.schema';
 
 
 export class CreateProductoDto {
@@ -16,6 +17,11 @@ export class CreateProductoDto {
     @IsArray()
     @ArrayNotEmpty()
     proveedor?: string[]; // Es un array de ObjectIds que hace referencia a los proveedores
+
+    @IsOptional()
+    @IsArray()
+    @ArrayNotEmpty()
+    cliente?: Clientes[];
 
     @IsOptional()
     activo?: boolean;

@@ -4,8 +4,16 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  // Habilita CORS
+  app.enableCors({
+    origin: '*', // Permite todas las solicitudes de cualquier origen. Cambia esto para mayor seguridad.
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Métodos permitidos
+    allowedHeaders: 'Content-Type, Accept, Authorization', // Cabeceras permitidas
+  });
+
    // Aquí estableces el prefijo global 'api'
-   app.setGlobalPrefix('api');
+  app.setGlobalPrefix('api');
 
    // Configuración de Swagger
   const config = new DocumentBuilder()
@@ -19,6 +27,6 @@ async function bootstrap() {
     console.log(`Documentación de Swagger está disponible en: http://localhost:3000/api`);
 
 
-  await app.listen(3000);
+  await app.listen(2000);
 }
 bootstrap();

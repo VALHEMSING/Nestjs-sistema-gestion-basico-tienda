@@ -1,3 +1,4 @@
+import { Clientes } from "src/module/clientes/schema/clientes.schema";
 
 export interface IProductos {
     id?: string;
@@ -5,5 +6,6 @@ export interface IProductos {
     cantidad: number;
     precio: number;
     proveedor: string[];
+    cliente: string[];
     activo?: boolean;
 }

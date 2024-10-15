@@ -5,11 +5,13 @@ import { ProductosControllers } from './controllers/productos.controllers';
 import { Productos, ProductoSchema } from './schema/productos.schema';
 import { ProveedoresModule } from '../proveedores/proveedores.module';
 import { ProveedoresServices } from '../proveedores/service/proveedores.service';
+import { ClientesModule } from '../clientes/clientes.module';
 
 
 @Module({
     imports:[MongooseModule.forFeature([{name: Productos.name,schema: ProductoSchema,}]),
     ProveedoresModule,
+    ClientesModule,
 
 ],
     controllers:[ProductosControllers],

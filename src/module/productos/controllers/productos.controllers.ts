@@ -77,12 +77,23 @@ export class ProductosControllers{
         @Param('productoId') productoId: string,
         @Param('proveedorId') proveedorId: string,
     ): Promise<Productos> {
-        return this.productosServices.agregarProveedorAProducto(productoId, proveedorId);
+        return await this.productosServices.agregarProveedorAProducto(productoId, proveedorId);
     }
 
     @Patch(':productoId/proveedores/:proveedorId/eliminar')
     async eliminarProveedorProducto(@Param('productoId') productoId: string, @Param('proveedorId') proveedorId: string): Promise<Productos> {
-        return this.productosServices.eliminarProveedorDeProducto(productoId, proveedorId);
+        return await this.productosServices.eliminarProveedorDeProducto(productoId, proveedorId);
+    }
+
+    @Patch(':productoId/clientes/:clienteId')
+    async agregarClienteAProducto(@Param('productoId') productoId: string,@Param('clienteId') clienteId: string): Promise<Productos>{
+        
+        return await this.productosServices.agregarClientesAProducto(productoId, clienteId);
+    }
+
+    @Patch(':productoId/clientes/:clienteId/eliminar')
+    async eliminarCLienteDeProducto(@Param('productoId') productoId: string, @Param('clienteId') clienteId: string): Promise<Productos>{
+        return await this.productosServices.eliminarClientesDeProducto(productoId, clienteId);
     }
 
 }
