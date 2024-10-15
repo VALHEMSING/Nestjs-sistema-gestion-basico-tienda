@@ -1,11 +1,11 @@
-import { Proveedores } from "src/module/proveedores/schema/proveedores.schema";
+import { Clientes } from "src/module/clientes/schema/clientes.schema";
 
-
-export interface IProductos{
+export interface IProductos {
     id?: string;
     nombre_producto: string;
     cantidad: number;
     precio: number;
-    proveedor: Proveedores;
+    proveedor: string[];
+    cliente: string[];
     activo?: boolean;
 }
