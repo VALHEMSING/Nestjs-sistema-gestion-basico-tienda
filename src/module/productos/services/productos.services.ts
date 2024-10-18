@@ -25,18 +25,15 @@ export class ProductosServices{
 
 
     async findAllProdutos(): Promise<Productos[]>{
-        const findAllProdutos = await this.productosModel.find()
-        .populate('proveedor', 'nombre_proveedor')
-        .populate('cliente', 'nombre_cliente')
-        .exec();
+        const findAllProdutos = await this.productosModel.find().populate('proveedor').populate('cliente').exec();
         return findAllProdutos;
     }
 
 
     async findOne(id: string): Promise<Productos>{
         const findOneProducto = await this.productosModel.findById(id)
-        .populate('proveedor', 'nombre_proveedor')
-        .populate('cliente', ' nombre_cliente')
+        .populate('proveedor')
+        .populate('cliente')
         .exec();
         if(!findOneProducto){
             throw new NotFoundException(`Producto con Id ${id} no se encontro`);

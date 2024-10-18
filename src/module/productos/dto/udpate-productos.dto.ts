@@ -1,30 +1,30 @@
-import { IsString, IsNumber, IsOptional, IsArray, ArrayNotEmpty } from 'class-validator';
-import { Types } from 'mongoose';
+import { IsOptional, IsNotEmpty, IsNumber, IsBoolean, IsArray, IsMongoId } from 'class-validator';
+
 export class UpdateProductoDto {
+
     @IsOptional()
-    @IsString()
-    nombre_producto?: string;  // El nombre del producto puede ser actualizado
+    @IsNotEmpty()
+    nombre_producto?: string;  // Nombre del producto
 
     @IsOptional()
     @IsNumber()
-    cantidad?: number;  // La cantidad puede ser actualizada
+    cantidad?: number;  // Cantidad en inventario
 
     @IsOptional()
     @IsNumber()
-    precio?: number;  // El precio puede ser actualizado
+    precio?: number;  // Precio del producto
 
-    // El campo de proveedores es opcional cuando se actualiza un producto
     @IsOptional()
     @IsArray()
-    @ArrayNotEmpty()
-    proveedor?: Types.ObjectId[];  // Array de ObjectIds que hace referencia a los proveedores
+    @IsMongoId({ each: true })
+    proveedor?: string[];  // Array de ObjectIds de Proveedores
 
-    // Si necesitas referenciar clientes por su ID
     @IsOptional()
     @IsArray()
-    @ArrayNotEmpty()
-    cliente?: Types.ObjectId[];  // Array de ObjectIds que hace referencia a los clientes
+    @IsMongoId({ each: true })
+    cliente?: string[];  // Array de ObjectIds de Clientes
 
     @IsOptional()
-    activo?: boolean;  // Indica si el producto está activo o no
+    @IsBoolean()
+    activo?: boolean;  // Opción para marcar si el producto está activo o no
 }
