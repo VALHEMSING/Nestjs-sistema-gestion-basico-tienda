@@ -1,28 +1,28 @@
 import { IsString, IsNumber, IsOptional, IsArray, ArrayNotEmpty } from 'class-validator';
-import { Clientes } from 'src/module/clientes/schema/clientes.schema';
-
-
+import { Types } from 'mongoose';
 export class CreateProductoDto {
     @IsString()
-    nombre_producto: string;
+    nombre_producto: string;  // Nombre del producto
 
     @IsNumber()
-    cantidad: number;
+    cantidad: number;  // Cantidad del producto
 
     @IsNumber()
-    precio: number;
+    precio: number;  // Precio del producto
 
     // El campo de proveedores es opcional cuando creamos un producto
     @IsOptional()
     @IsArray()
     @ArrayNotEmpty()
-    proveedor?: string[]; // Es un array de ObjectIds que hace referencia a los proveedores
+    proveedor?: Types.ObjectId[];  // Array de ObjectIds que referencia a los proveedores
 
+    // Si necesitas referenciar clientes por su ID
     @IsOptional()
     @IsArray()
     @ArrayNotEmpty()
-    cliente?: Clientes[];
+    cliente?: Types.ObjectId[];  // Array de ObjectIds que referencia a los clientes
 
+    // Activo es opcional y se puede definir en el modelo si no se proporciona
     @IsOptional()
-    activo?: boolean;
+    activo?: boolean;  // Indica si el producto está activo
 }

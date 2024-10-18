@@ -1,29 +1,30 @@
-import { IsOptional, IsString, IsBoolean, IsNumber, IsArray } from "class-validator";
-import { Clientes } from "src/module/clientes/schema/clientes.schema";
-import { Types } from "mongoose";
-
-export class UpdateProductosDto {
-
-    @IsOptional() 
+import { IsString, IsNumber, IsOptional, IsArray, ArrayNotEmpty } from 'class-validator';
+import { Types } from 'mongoose';
+export class UpdateProductoDto {
+    @IsOptional()
     @IsString()
-    nombre_producto?: string;
+    nombre_producto?: string;  // El nombre del producto puede ser actualizado
 
-    @IsOptional() 
+    @IsOptional()
     @IsNumber()
-    cantidad?: number;
+    cantidad?: number;  // La cantidad puede ser actualizada
 
-    @IsOptional() 
+    @IsOptional()
     @IsNumber()
-    precio?: number;
+    precio?: number;  // El precio puede ser actualizado
 
-    @IsOptional() 
-    @IsArray() 
-    proveedor?: string[]; 
+    // El campo de proveedores es opcional cuando se actualiza un producto
     @IsOptional()
     @IsArray()
-    cliente?: Clientes[];
+    @ArrayNotEmpty()
+    proveedor?: Types.ObjectId[];  // Array de ObjectIds que hace referencia a los proveedores
 
-    @IsOptional() 
-    @IsBoolean()
-    activo?: boolean;
+    // Si necesitas referenciar clientes por su ID
+    @IsOptional()
+    @IsArray()
+    @ArrayNotEmpty()
+    cliente?: Types.ObjectId[];  // Array de ObjectIds que hace referencia a los clientes
+
+    @IsOptional()
+    activo?: boolean;  // Indica si el producto está activo o no
 }

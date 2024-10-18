@@ -24,7 +24,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('api', app, document);  // Configura Swagger en el endpoint '/api'
 
-    console.log(`Documentación de Swagger está disponible en: http://localhost:3000/api`);
+    console.log(`Documentación de Swagger está disponible en: http://localhost:2000/api`);
 
 
   await app.listen(2000);
