@@ -1,4 +1,5 @@
 import { IsString, IsNumber, IsOptional, IsArray, ArrayNotEmpty } from 'class-validator';
+import { Types } from 'mongoose';
 import { Clientes } from 'src/module/clientes/schema/clientes.schema';
 
 
@@ -16,12 +17,12 @@ export class CreateProductoDto {
     @IsOptional()
     @IsArray()
     @ArrayNotEmpty()
-    proveedor?: string[]; // Es un array de ObjectIds que hace referencia a los proveedores
+    proveedor?: Types.ObjectId[]; // Es un array de ObjectIds que hace referencia a los proveedores
 
     @IsOptional()
     @IsArray()
     @ArrayNotEmpty()
-    cliente?: Clientes[];
+    cliente?: Types.ObjectId[];
 
     @IsOptional()
     activo?: boolean;

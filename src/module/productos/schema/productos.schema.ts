@@ -16,11 +16,11 @@ export class Productos extends Document implements IProductos {
     precio: number;
 
     // Definir como un array de strings que referencia a Proveedores
-    @Prop({ type: [String], ref: 'Proveedores', required: true })
-    proveedor: string[]; 
+    @Prop({ type: [String], ref: 'Proveedores',  })
+    proveedor?: string[]; 
     
-    @Prop({type: [String], ref: 'Clientes', required: true})
-    cliente: string[];
+    @Prop({type: [String], ref: 'Clientes', })
+    cliente?: string[];
 
     @Prop({ default: true })
     activo?: boolean;
