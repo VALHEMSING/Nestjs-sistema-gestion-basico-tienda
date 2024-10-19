@@ -18,10 +18,10 @@ export class UpdateProductosDto {
 
     @IsOptional() 
     @IsArray() 
-    proveedor?: Types.ObjectId[]; 
+    proveedor?: string[]; 
     @IsOptional()
     @IsArray()
-    cliente?: Types.ObjectId[];
+    cliente?: string[];
 
     @IsOptional() 
     @IsBoolean()

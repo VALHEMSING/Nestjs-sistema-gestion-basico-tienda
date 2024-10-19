@@ -16,13 +16,11 @@ export class CreateProductoDto {
     // El campo de proveedores es opcional cuando creamos un producto
     @IsOptional()
     @IsArray()
-    @ArrayNotEmpty()
-    proveedor?: Types.ObjectId[]; // Es un array de ObjectIds que hace referencia a los proveedores
+    proveedor?: string[]; // Es un array de ObjectIds que hace referencia a los proveedores
 
     @IsOptional()
     @IsArray()
-    @ArrayNotEmpty()
-    cliente?: Types.ObjectId[];
+    cliente?: string[];
 
     @IsOptional()
     activo?: boolean;

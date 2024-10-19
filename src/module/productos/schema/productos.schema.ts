@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Document, Types } from "mongoose";
 import { IProductos } from "../interface/produectos.interface";
 import { Clientes } from "src/module/clientes/schema/clientes.schema";
+import { Proveedores } from "src/module/proveedores/schema/proveedores.schema";
 
 @Schema()
 export class Productos extends Document implements IProductos {
@@ -16,10 +17,10 @@ export class Productos extends Document implements IProductos {
     precio: number;
 
     // Definir como un array de strings que referencia a Proveedores
-    @Prop({ type: [String], ref: 'Proveedores',  })
+    @Prop({ type: [String], ref: Proveedores.name,  })
     proveedor?: string[]; 
     
-    @Prop({type: [String], ref: 'Clientes', })
+    @Prop({type: [String], ref: Clientes.name })
     cliente?: string[];
 
     @Prop({ default: true })
