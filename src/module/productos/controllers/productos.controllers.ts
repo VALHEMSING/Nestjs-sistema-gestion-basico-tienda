@@ -13,7 +13,10 @@ import { ProductosServices } from '../services/productos.services';
 import { CreateProductoDto } from '../dto/create-productos.dto';
 import { UpdateProductosDto } from '../dto/udpate-productos.dto';
 import { Productos } from '../schema/productos.schema';
+import { ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { AgregarProveedorAProductoDto } from '../dto/agregarProveedorAProducto.dto';
 
+@ApiTags('Productos')
 @Controller('productos')
 export class ProductosControllers{
     constructor(private readonly productosServices: ProductosServices){
@@ -21,7 +24,20 @@ export class ProductosControllers{
     }
 
     @Post()
-    async create(@Body()createProductosDto: CreateProductoDto): Promise<Productos>{
+    @ApiOperation({ summary: 'Crear un producto' })
+    @ApiBody({
+        description: 'Datos del producto a crear',
+        examples:{
+            example:{
+                value:{
+                    nombre_producto: "Nombre Producto",
+                    cantidad: 100,
+                    precio: 1.0000
+                }
+            }
+        }
+    })
+    async create(@Body() createProductosDto: CreateProductoDto): Promise<Productos> {
         return this.productosServices.createProducto(createProductosDto);
     }
 
@@ -72,18 +88,41 @@ export class ProductosControllers{
     }
 
     // Ruta para agregar un proveedor a un producto
-    @Patch(':productoId/proveedores/:proveedorId')
-    async agregarProveedorProducto(
-        @Param('productoId') productoId: string,
-        @Param('proveedorId') proveedorId: string,
-    ): Promise<Productos> {
-        return await this.productosServices.agregarProveedorAProducto(productoId, proveedorId);
-    }
+   // Ruta para agregar un proveedor a un producto
+   @Post('producto/:id/proveedor/:proveedorId')
+   @ApiOperation({ summary: 'Agregar uno o varios proveedores a un producto' })
+   @ApiParam({ name: 'id', required: true, description: 'ID del producto' })
+   @ApiParam({ name: 'proveedorId', required: true, description: 'ID del proveedor a agregar' })
+   async agregarProveedores(
+       @Param('id') id: string,
+       @Param('proveedorId') proveedorId: string
+   ): Promise<Productos> {
+       return await this.productosServices.addProveedorToProducto(id, proveedorId);
+   }
+  
+
+
 
     @Patch(':productoId/proveedores/:proveedorId/eliminar')
-    async eliminarProveedorProducto(@Param('productoId') productoId: string, @Param('proveedorId') proveedorId: string): Promise<Productos> {
-        return await this.productosServices.eliminarProveedorDeProducto(productoId, proveedorId);
+    @ApiOperation({ summary: 'Eliminar un proveedor de un producto' })
+    @ApiParam({ name: 'productoId', description: 'ID del producto', type: String })
+    @ApiParam({ name: 'proveedorId', description: 'ID del proveedor a eliminar', type: String })
+    @ApiResponse({
+      status: 200,
+      description: 'Proveedor eliminado del producto correctamente.',
+      type: Productos,
+    })
+    @ApiResponse({
+      status: 404,
+      description: 'Producto o proveedor no encontrado.',
+    })
+    async eliminarProveedorProducto(
+      @Param('productoId') productoId: string,
+      @Param('proveedorId') proveedorId: string,
+    ): Promise<Productos> {
+      return await this.productosServices.eliminarProveedorDeProducto(productoId, proveedorId);
     }
+    
 
     @Patch(':productoId/clientes/:clienteId')
     async agregarClienteAProducto(@Param('productoId') productoId: string,@Param('clienteId') clienteId: string): Promise<Productos>{

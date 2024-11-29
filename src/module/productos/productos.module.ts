@@ -6,10 +6,14 @@ import { Productos, ProductoSchema } from './schema/productos.schema';
 import { ProveedoresModule } from '../proveedores/proveedores.module';
 import { ProveedoresServices } from '../proveedores/service/proveedores.service';
 import { ClientesModule } from '../clientes/clientes.module';
+import { Proveedores, ProveedoresSchema } from '../proveedores/schema/proveedores.schema';
 
 
 @Module({
-    imports:[MongooseModule.forFeature([{name: Productos.name,schema: ProductoSchema,}]),
+    imports:[MongooseModule.forFeature([
+        {name: Productos.name,schema: ProductoSchema},
+        {name: Proveedores.name, schema: ProveedoresSchema}
+    ]),
     ProveedoresModule,
     ClientesModule,
 
